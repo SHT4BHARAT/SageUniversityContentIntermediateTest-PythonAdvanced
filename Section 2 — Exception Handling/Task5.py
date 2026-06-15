@@ -1,3 +1,6 @@
+class AccountLockedError(Exception):
+    pass
+
 class LoginSystem:
     __password = "python@123"
     __attempts = 3
@@ -7,24 +10,25 @@ class LoginSystem:
 
     def login(self):
         try:
-            if self.__attempts == 0:
+            for i in range(self.__attempts):
+                pas=input("Enter the Password:")
+  #             print({self.__attempts}-1)
+                if pas==self.__password:
+                    print("Login Succesfully")
+                else:
+                    print("Login Failed!\nTry again")
+                    self.__attempts-=1
+                
+            if self.__attempts==0:
                 raise AccountLockedError
-            
-            else:
-                for i in range(self.__attempts):
-                    pas=input("Enter the Password:")
-                    if pas==self.__password:
-                        print("Login Succesfully")
-                    else:
-                        self.__attempts-=1
+
         except AccountLockedError:
             print("No Remaining Login Attempts")
 
         except Exception as e:
             print ("Login Failed:",e)
 
-        finally:
-            pass 
+        
 
 l=LoginSystem()
 l.login()
